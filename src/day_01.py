@@ -33,7 +33,7 @@ def get_first_last_number(line: str) -> (str, str):
     return mappings.get(matches[0]), mappings.get(matches[-1])
 
 def read_file() -> list:
-    with open("src/input.txt", "r") as file:
+    with open("src/day_01_input.txt", "r") as file:
         return file.readlines()
 
 def get_calibration_values_total():
