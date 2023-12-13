@@ -1,4 +1,4 @@
-from day_01 import parse_line, mappings, read_file, get_first_last_number
+from day_01 import parse_line, mappings, read_file
 
 
 def test_mappings():
