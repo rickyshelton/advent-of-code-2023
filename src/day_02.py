@@ -43,29 +43,50 @@ def get_game_lines() -> list[str]:
     with open("src/day_02_input.txt", "r") as file:
         return file.readlines()
 
+def get_game_power(game_minimums: dict[str, int]) -> int:
+    power = 1
+
+    for colour in game_minimums.keys():
+        power = power * game_minimums.get(colour)
+
+    return power
+
 
 def main():
     possible_game_id_totals = 0
+    power_totals = 0
     games = get_game_lines()
 
     for game in games:
         game_id = int(get_game_id(game))
         game_possible = True
         game_sets = get_sets(game)
+        game_minimums = {}
 
         for game_set in game_sets:
             colour_totals = get_colour_totals(game_set)
+
+            for colour in colour_totals.keys():
+                colour_count = colour_totals.get(colour)
+
+                if colour in game_minimums:
+                    if colour_count > game_minimums.get(colour):
+                        game_minimums[colour] = colour_count
+                else:
+                    game_minimums[colour] = colour_count
 
             if not is_set_possible(colour_totals):
                 game_possible = False
 
         if game_possible:
-            print(f'Game {game_id} possible')
             possible_game_id_totals += game_id
-        else:
-            print(f'Game {game_id} not possible')
+
+        power = get_game_power(game_minimums)
+        power_totals = power_totals + power
+
 
     print(f'Possible game totals {possible_game_id_totals}')
+    print(f'Power totals {power_totals}')
     return 0
 
 if __name__ == '__main__':
